@@ -1,12 +1,12 @@
 import { createContext, FC, ReactNode, useContext, useState } from "react";
 import { ThemeName } from "../common";
 
-type PdfContextProps = {
+type TPdfContext = {
   theme: ThemeName;
   OnChangeTheme: (theme: ThemeName) => void;
 };
 
-const PdfContext = createContext<PdfContextProps>({
+const PdfContext = createContext<TPdfContext>({
   theme: "default",
   OnChangeTheme: (theme: ThemeName) => theme,
 });

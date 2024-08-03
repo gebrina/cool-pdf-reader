@@ -1,3 +1,8 @@
 import styled from "@emotion/styled";
 
-export const PdfUploader = styled.div``;
+type TPdfUploaderProps = {
+  t;
+};
+export const PdfUploader = styled.section``;
+
+export const Title = styled.h3``;
