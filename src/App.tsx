@@ -1,6 +1,6 @@
 import { PdfContainer } from "./App.style";
 import { usePdfContext } from "./context";
-import { PdfUploader } from "./pdf";
+import { PdfUploader, PdfViewer } from "./pdf";
 
 export const App = () => {
   const { theme } = usePdfContext();
@@ -8,7 +8,7 @@ export const App = () => {
   return (
     <PdfContainer theme={theme}>
       <PdfUploader theme={theme} />
-      {/* <PdfViewer /> */}
+      <PdfViewer />
     </PdfContainer>
   );
 };
