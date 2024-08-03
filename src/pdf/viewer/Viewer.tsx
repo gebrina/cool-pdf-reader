@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { PdfViewer, ThemeName } from "./Viewer.style";
+import { usePdfContext } from "../../context";
+import { PdfViewer } from "./Viewer.style";
 
 export const Viewer = () => {
-  const [theme, setTheme] = useState<ThemeName>("default");
-
+  const { theme } = usePdfContext();
   return <PdfViewer theme={theme}>Viewer</PdfViewer>;
 };
