@@ -7,7 +7,7 @@ type PdfContextProps = {
 };
 
 const PdfContext = createContext<PdfContextProps>({
-  theme: "dark",
+  theme: "default",
   OnChangeTheme: (theme: ThemeName) => theme,
 });
 
