@@ -13,7 +13,11 @@ export const Uploader: FC<TUploaderProps> = ({ theme }) => {
 
   return (
     <PdfUploader theme={theme}>
-      <Title>Learn to Read & Read to Learn!</Title>
+      <Title>
+        Learn to Read &
+        <br />
+        Read to Learn!
+      </Title>
       <InputFile
         accept="application/pdf"
         onChange={OnInputFileChange}

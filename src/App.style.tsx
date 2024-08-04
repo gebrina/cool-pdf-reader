@@ -17,6 +17,10 @@ export const PdfContainer = styled.div<ITheme>(
     flex-direction: column;
     gap: 50px;
     padding: 3em 5em;
+
+    @media only screen and (max-width: 600px) {
+      padding: 0px 30px;
+    }
   `
 );
 
