@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 export const Viewer = () => {
   const { theme, pdfFile } = usePdfContext();
   const [numPages, setNumPages] = useState(0);
-  const [pageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }): void => {
     setNumPages(numPages);

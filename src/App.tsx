@@ -1,4 +1,6 @@
-import { PdfContainer } from "./App.style";
+import { FiUpload } from "react-icons/fi";
+import { Banner, PdfContainer } from "./App.style";
+import beautyGirl from "./assets/bg.jpeg";
 import { usePdfContext } from "./context";
 import { PdfUploader, PdfViewer } from "./pdf";
 
@@ -6,7 +8,13 @@ export const App = () => {
   const { theme } = usePdfContext();
 
   return (
-    <PdfContainer theme={theme}>
+    <PdfContainer
+      style={{ backgroundImage: `url(${beautyGirl})` }}
+      theme={theme}
+    >
+      <Banner>
+        <FiUpload />
+      </Banner>
       <PdfUploader theme={theme} />
       <PdfViewer />
     </PdfContainer>

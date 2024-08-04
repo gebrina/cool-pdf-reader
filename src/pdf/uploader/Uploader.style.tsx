@@ -6,18 +6,19 @@ export const PdfUploader = styled.section<ITheme>(
   ({ theme }) => css`
     display: flex;
     padding-top: 2rem;
-    width: 100%;
-    max-width: 600px;
+    mix-blend-mode: screen;
     flex-direction: column;
-    margin: 0 auto;
+    text-align: left;
+    justify-content: left;
+    align-items: start;
     gap: 1rem;
   `
 );
 
 export const Title = styled.h3`
   font-size: 2.5rem;
-  text-wrap: nowrap;
   text-align: center;
+  color: white;
   @media only screen and (max-width: 400px) {
     font-size: 2rem;
   }
@@ -27,17 +28,18 @@ export const InputFile = styled.input`
   display: none;
 `;
 
-export const InputLable = styled.label<ITheme>(
+export const InputLabel = styled.label<ITheme>(
   ({ theme }) => css`
-    height: 5rem;
-    display: grid;
-    place-content: center;
+    display: flex;
+    justify-content: center;
+    max-width: max-content;
+    padding: 10px 20px;
+    gap: 10px;
     background-color: ${theme === "default"
-      ? "#b7b6ba"
+      ? "lightblue"
       : theme === "dark"
       ? "black"
       : "white"};
-    margin: 0 2rem;
     border-radius: 1rem;
     font-size: 1.3rem;
     box-shadow: 0.3px 0.3px 0.3px 0.5px rgba(118, 130, 118, 0.1),
