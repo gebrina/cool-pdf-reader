@@ -32,13 +32,11 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
 
   const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log(file);
     if (file) {
       const fileUrl = URL.createObjectURL(file);
       setPdfFile(fileUrl);
-      console.log("open new tab", fileUrl);
-      window.open("https://google.com");
     }
+    event.target.value = "";
   };
 
   const handleChangeTheme = (theme: ThemeName) => {
