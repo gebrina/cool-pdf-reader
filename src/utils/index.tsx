@@ -10,7 +10,7 @@ export const selectColors = (theme: ThemeName): TSelectColor => {
   let selectedColors: TSelectColor = {
     bgColor: "#b7b8cc",
     textColor: "#272731",
-    titleColor: "#921862",
+    titleColor: "#ead7e3",
   };
 
   switch (theme) {

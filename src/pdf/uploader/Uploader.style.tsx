@@ -1,30 +1,38 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { ITheme } from "../../common";
+import { selectColors } from "../../utils";
 
 export const PdfUploader = styled.section<ITheme>(
   ({ theme }) => css`
-    display: flex;
-    width: 100%;
-    padding-top: 2rem;
+    transform: scaleX(-1);
+    color: ${selectColors(theme).textColor};
     mix-blend-mode: screen;
+    padding: 0 3em;
+    display: flex;
     flex-direction: column;
-    text-align: left;
-    justify-content: left;
-    align-items: start;
+    /* background-color: aliceblue; */
+    align-items: flex-start;
     gap: 1rem;
   `
 );
 
-export const Title = styled.h3`
-  font-size: 3.5rem;
-  /* text-shadow: 10px 1px red; */
-  -webkit-text-stroke: 1px rgb(0, 255, 255);
-  color: white;
-  @media only screen and (max-width: 400px) {
-    font-size: 2rem;
-  }
-`;
+export const Title = styled.h3<ITheme>(
+  ({ theme }) => css`
+    font-size: 3.5rem;
+    color: ${selectColors(theme).titleColor};
+    -webkit-text-stroke: 1px rgb(0, 255, 255);
+    span {
+      padding: 0 0.3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+      text-shadow: 3px 3px rgb(0, 255, 255), -4px -4px red;
+    }
+  `
+);
 
 export const InputFile = styled.input`
   display: none;

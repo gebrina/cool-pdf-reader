@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { BiUpload } from "react-icons/bi";
+import { BiBookHeart, BiUpload } from "react-icons/bi";
+import { FiBookOpen } from "react-icons/fi";
 import { ThemeName } from "../../common";
 import { usePdfContext } from "../../context";
 import { InputFile, InputLabel, PdfUploader, Title } from "./Uploader.style";
@@ -13,9 +14,11 @@ export const Uploader: FC<TUploaderProps> = ({ theme }) => {
 
   return (
     <PdfUploader theme={theme}>
-      <Title>
-        Learn to Read &
-        <br />
+      <Title theme={theme}>
+        Learn to Read
+        <span>
+          <FiBookOpen /> & <BiBookHeart />
+        </span>
         Read to Learn!
       </Title>
       <InputFile
