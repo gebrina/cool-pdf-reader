@@ -5,7 +5,8 @@ import { selectColors } from "../../utils";
 
 export const PdfUploader = styled.section<ITheme>(
   ({ theme }) => css`
-    transform: scaleX(-1);
+    transform: translateY(-1rem) scaleX(-1);
+
     color: ${selectColors(theme).textColor};
     mix-blend-mode: screen;
     padding: 0 3em;
@@ -30,6 +31,10 @@ export const Title = styled.h3<ITheme>(
       gap: 1rem;
       text-align: center;
       text-shadow: 3px 3px rgb(0, 255, 255), -4px -4px red;
+    }
+
+    @media only screen and (max-width: 600px) {
+      font-size: 2.5rem;
     }
   `
 );
@@ -58,6 +63,9 @@ export const InputLabel = styled.label<ITheme>(
       cursor: pointer;
       background-color: #a4b0ae;
       transition: all 0.5s ease;
+    }
+    @media only screen and (max-width: 600px) {
+      font-size: 1rem;
     }
   `
 );
