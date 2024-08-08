@@ -6,6 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { ThemeName } from "../common";
 
 type TPdfContext = {
@@ -27,16 +28,19 @@ const PdfContext = createContext<TPdfContext>({
 export const PdfContextProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const navigate = useNavigate();
+
   const [themeName, setThemeName] = useState<ThemeName>("default");
   const [pdfFile, setPdfFile] = useState("");
 
   const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    event.target.value = "";
     if (file) {
       const fileUrl = URL.createObjectURL(file);
       setPdfFile(fileUrl);
+      navigate(`/${file.name}`);
     }
-    event.target.value = "";
   };
 
   const handleChangeTheme = (theme: ThemeName) => {

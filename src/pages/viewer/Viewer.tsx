@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { Navigate } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import { PdfViewer } from "./Viewer.style";
 
@@ -17,18 +18,18 @@ export const Viewer = () => {
     setNumPages(numPages);
   };
 
+  if (!pdfFile) return <Navigate to={"/"} />;
+
   return (
     <PdfViewer theme={theme}>
-      {pdfFile && (
-        <>
-          <Document onLoadSuccess={onDocumentLoadSuccess} file={pdfFile}>
-            <Page pageNumber={pageNumber} />
-          </Document>
-          <p>
-            Page :{pageNumber} of {numPages}
-          </p>
-        </>
-      )}
+      <>
+        <Document onLoadSuccess={onDocumentLoadSuccess} file={pdfFile}>
+          <Page pageNumber={pageNumber} />
+        </Document>
+        <p>
+          Page :{pageNumber} of {numPages}
+        </p>
+      </>
     </PdfViewer>
   );
 };
