@@ -19,12 +19,16 @@ export const Viewer = () => {
 
   return (
     <PdfViewer theme={theme}>
-      <Document onLoadSuccess={onDocumentLoadSuccess} file={pdfFile}>
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <p>
-        Page :{pageNumber} of {numPages}
-      </p>
+      {pdfFile && (
+        <>
+          <Document onLoadSuccess={onDocumentLoadSuccess} file={pdfFile}>
+            <Page pageNumber={pageNumber} />
+          </Document>
+          <p>
+            Page :{pageNumber} of {numPages}
+          </p>
+        </>
+      )}
     </PdfViewer>
   );
 };

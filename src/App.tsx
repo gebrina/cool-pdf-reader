@@ -11,7 +11,7 @@ export const App = () => {
       style={{ backgroundImage: `url(${beautyGirl})` }}
       theme={theme}
     >
-      <PdfUploader theme={theme} />
+      <PdfUploader />
       <PdfViewer />
     </PdfContainer>
   );

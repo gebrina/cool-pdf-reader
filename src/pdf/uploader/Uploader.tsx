@@ -1,16 +1,10 @@
-import { FC } from "react";
 import { BiBookHeart, BiUpload } from "react-icons/bi";
 import { FiBookOpen } from "react-icons/fi";
-import { ThemeName } from "../../common";
 import { usePdfContext } from "../../context";
 import { InputFile, InputLabel, PdfUploader, Title } from "./Uploader.style";
 
-type TUploaderProps = {
-  theme: ThemeName;
-};
-
-export const Uploader: FC<TUploaderProps> = ({ theme }) => {
-  const { OnInputFileChange } = usePdfContext();
+export const Uploader = () => {
+  const { theme, OnInputFileChange } = usePdfContext();
 
   return (
     <PdfUploader theme={theme}>
