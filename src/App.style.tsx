@@ -8,13 +8,12 @@ export const PdfContainer = styled.div<ITheme>(
     background-size: cover;
     background-position: center;
     /* filter: invert(5%); */
+    height: 100%;
     transform: scaleX(-1);
     background-repeat: no-repeat;
     background-blend-mode: luminosity;
     background-color: ${selectColors(theme).bgColor};
     color: ${selectColors(theme).textColor};
-    height: 100dvh;
-    width: 100dvw;
     display: flex;
     justify-content: center;
     flex-direction: column;
