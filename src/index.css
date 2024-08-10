@@ -5,10 +5,10 @@
 
 body,
 main {
-  height: 100dvh;
+  height: 100%;
   width: 100dvw;
-  overflow: hidden;
 }
+
 * {
   /* Rest margin, padding  and box-sizing */
   margin: 0;
