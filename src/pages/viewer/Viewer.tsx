@@ -34,11 +34,15 @@ export const Viewer = () => {
   const handleNextPage = () => {
     const nextPageNumber = numPages > pageNumber ? pageNumber + 1 : numPages;
     setPageNumber(nextPageNumber);
+    scrollToTop();
   };
+
+  const scrollToTop = () => scrollTo({ top: 0, behavior: "smooth" });
 
   const handlePrevPage = () => {
     const prevPageNumber = pageNumber > 1 ? pageNumber - 1 : pageNumber;
     setPageNumber(prevPageNumber);
+    scrollToTop();
   };
 
   return (
