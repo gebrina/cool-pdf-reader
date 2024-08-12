@@ -19,11 +19,15 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
+type TZoomType = "decrease" | "increase";
+
 export const Viewer = () => {
   const { theme, pdfFile } = usePdfContext();
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
-  const [zoomPercent, setZoomPercent] = useState("100%");
+  const [zoomPercent, setZoomPercent] = useState(100);
+  const [canvasWidth, setCanvasWidth] = useState(window.innerWidth);
+  const ZOOM_BY = 25;
 
   if (!pdfFile) return <Navigate to={"/"} />;
 
@@ -31,26 +35,56 @@ export const Viewer = () => {
     setNumPages(numPages);
   };
 
+  const handleZooming = (zoomType: TZoomType) => {
+    if (
+      (zoomPercent <= 50 && zoomType == "decrease") ||
+      (zoomPercent >= 400 && zoomType == "increase")
+    )
+      return;
+
+    // Add horizontal scroll bar for the document
+    const rootElement: HTMLElement = document.querySelector("html")!;
+    if (zoomPercent >= 100) {
+      rootElement.style.overflowX = "auto";
+    } else {
+      rootElement.style.overflowX = "auto";
+    }
+
+    if (zoomType === "increase") {
+      setZoomPercent(zoomPercent + ZOOM_BY);
+      setCanvasWidth(canvasWidth + ZOOM_BY * 2);
+      return;
+    }
+
+    setZoomPercent(zoomPercent - ZOOM_BY);
+    setCanvasWidth(canvasWidth - ZOOM_BY * 2);
+  };
+
   const handleNextPage = () => {
     const nextPageNumber = numPages > pageNumber ? pageNumber + 1 : numPages;
     setPageNumber(nextPageNumber);
-    scrollToTop();
+    updateScrollPosition();
   };
 
-  const scrollToTop = () => scrollTo({ top: 0, behavior: "smooth" });
+  const updateScrollPosition = () =>
+    scrollTo({ left: 0, top: 0, behavior: "smooth" });
 
   const handlePrevPage = () => {
     const prevPageNumber = pageNumber > 1 ? pageNumber - 1 : pageNumber;
     setPageNumber(prevPageNumber);
-    scrollToTop();
+    updateScrollPosition();
   };
 
   return (
     <PdfViewer className="pdf-viewer" theme={theme}>
       <PdfViewerToolBar theme={theme}>
-        <FiMinus />
-        <span>{zoomPercent}</span>
-        <FiPlus />
+        <Button theme={theme} zoom onClick={() => handleZooming("decrease")}>
+          <FiMinus aria-label="Zoom Out" />
+        </Button>
+        <span>{zoomPercent}%</span>
+        <Button theme={theme} zoom onClick={() => handleZooming("increase")}>
+          <FiPlus aria-label="Zoom In" />
+        </Button>
       </PdfViewerToolBar>
       <>
         <Document
@@ -61,7 +95,7 @@ export const Viewer = () => {
           {/* <Outline /> */}
           <Page
             canvasBackground={selectColors(theme).bgColor}
-            width={800}
+            width={canvasWidth}
             onLoadError={(e) => console.error(e)}
             pageNumber={pageNumber}
           />

@@ -26,6 +26,7 @@ export const PdfViewer = styled.div<TStyleProps>(
       pointer-events: none;
       mix-blend-mode: multiply;
       top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background-color: ${selectColors(theme).bgColor};
@@ -65,16 +66,18 @@ export const PagingWrapper = styled.div<TStyleProps>(
   `
 );
 
-export const Button = styled.button<TStyleProps>(
-  ({ theme }) => css`
+type TButtonProps = TStyleProps & { zoom?: boolean };
+
+export const Button = styled.button<TButtonProps>(
+  ({ theme, zoom }) => css`
     border: none;
     background-color: transparent;
     display: inherit;
     align-items: center;
     cursor: pointer;
     svg {
-      font-size: 2.5rem;
-      color: ${selectColors(theme).titleColor};
+      font-size: ${zoom ? "" : "2.5rem"};
+      color: ${zoom ? "" : `${selectColors(theme).titleColor}`};
     }
   `
 );
@@ -86,6 +89,7 @@ export const PdfViewerToolBar = styled.div<TStyleProps>(
     z-index: 10;
     position: fixed;
     top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
