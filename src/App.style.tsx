@@ -8,11 +8,6 @@ export const PdfContainer = styled.div<ITheme>(
     background-size: cover;
     background-position: center;
     min-height: 100dvh;
-
-    &:not(:has(.pdf-viewer)) {
-      transform: scaleX(-1);
-    }
-
     background-repeat: no-repeat;
     background-blend-mode: luminosity;
     background-color: ${selectColors(theme).bgColor};
@@ -22,8 +17,13 @@ export const PdfContainer = styled.div<ITheme>(
     flex-direction: column;
     gap: 50px;
 
+    &:not(:has(.pdf-viewer)) {
+      transform: scaleX(-1);
+    }
+
     &::before {
       position: fixed;
+      pointer-events: none;
       top: 0;
       opacity: 0.5;
       content: "";

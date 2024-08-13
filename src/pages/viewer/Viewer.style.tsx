@@ -14,6 +14,29 @@ export const PdfViewer = styled.div<TStyleProps>(
     justify-items: center;
     min-height: 100dvh;
     width: 100%;
+
+    // Outline
+    .react-pdf__Outline {
+      position: fixed;
+      background-color: ${selectColors(theme).bgColor};
+      min-height: 100dvh;
+      padding: 1rem;
+      left: 0;
+      top: 50px;
+      text-align: left;
+      width: 50%;
+      z-index: 100;
+      ul li {
+        a {
+          color: ${selectColors(theme).textColor};
+        }
+        ul {
+          padding-left: 1rem;
+          opacity: 0.8;
+        }
+      }
+    }
+
     & > * {
       font-size: 1rem;
       font-weight: 600;
@@ -90,19 +113,33 @@ export const PdfViewerToolBar = styled.div<TStyleProps>(
     position: fixed;
     top: 0;
     left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
     gap: 0.5rem;
     background-color: ${selectColors(theme).bgColor};
     border-bottom: 2px solid ${selectColors(theme).titleColor};
     svg {
       font-size: 1.3rem;
-    }
-    & > * {
       cursor: pointer;
-      :hover {
+      transition: all 0.3s linear;
+      &:hover {
         opacity: 0.7;
+        transform: translateY(-0.1rem);
+      }
+    }
+
+    .zoom-btns-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .switch-outline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        font-size: 1.5rem;
       }
     }
   `

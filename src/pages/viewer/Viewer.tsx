@@ -1,9 +1,14 @@
 import { useState } from "react";
-import { BiSkipNext, BiSkipPrevious } from "react-icons/bi";
+import {
+  BiMenuAltLeft,
+  BiMenuAltRight,
+  BiSkipNext,
+  BiSkipPrevious,
+} from "react-icons/bi";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { Document, Page, pdfjs } from "react-pdf";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
+import { Document, Outline, Page, pdfjs } from "react-pdf";
+// import "react-pdf/dist/Page/AnnotationLayer.css";
+// import "react-pdf/dist/Page/TextLayer.css";
 import { Navigate } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import { selectColors } from "../../utils";
@@ -27,6 +32,8 @@ export const Viewer = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [zoomPercent, setZoomPercent] = useState(100);
   const [canvasWidth, setCanvasWidth] = useState(window.innerWidth);
+  const [showOutline, setShowOutline] = useState(false);
+
   const ZOOM_BY = 25;
 
   if (!pdfFile) return <Navigate to={"/"} />;
@@ -75,16 +82,31 @@ export const Viewer = () => {
     updateScrollPosition();
   };
 
+  const toggleOutlineVisibility = () => {
+    setShowOutline(!showOutline);
+  };
+
   return (
     <PdfViewer className="pdf-viewer" theme={theme}>
       <PdfViewerToolBar theme={theme}>
-        <Button theme={theme} zoom onClick={() => handleZooming("decrease")}>
-          <FiMinus aria-label="Zoom Out" />
-        </Button>
-        <span>{zoomPercent}%</span>
-        <Button theme={theme} zoom onClick={() => handleZooming("increase")}>
-          <FiPlus aria-label="Zoom In" />
-        </Button>
+        <div
+          className="switch-outline"
+          onClick={toggleOutlineVisibility}
+          role="switch"
+          aria-label="toggle outline visiblity"
+        >
+          {showOutline ? <BiMenuAltLeft /> : <BiMenuAltRight />}
+        </div>
+
+        <div className="zoom-btns-wrapper">
+          <Button theme={theme} zoom onClick={() => handleZooming("decrease")}>
+            <FiMinus aria-label="Zoom Out" />
+          </Button>
+          <span>{zoomPercent}%</span>
+          <Button theme={theme} zoom onClick={() => handleZooming("increase")}>
+            <FiPlus aria-label="Zoom In" />
+          </Button>
+        </div>
       </PdfViewerToolBar>
       <>
         <Document
@@ -92,13 +114,14 @@ export const Viewer = () => {
           onLoadSuccess={onDocumentLoadSuccess}
           file={pdfFile}
         >
-          {/* <Outline /> */}
+          {showOutline && <Outline />}
           <Page
             canvasBackground={selectColors(theme).bgColor}
             width={canvasWidth}
             onLoadError={(e) => console.error(e)}
             pageNumber={pageNumber}
           />
+
           {/* <Thumbnail pageNumber={pageNumber} height={500} /> */}
           {/* 
           {numPages > 0 &&
