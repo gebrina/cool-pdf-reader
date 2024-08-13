@@ -130,7 +130,7 @@ export const PdfOutline = styled(Outline)<
   ({ exitAnimate, theme }) => css`
     position: fixed;
     background-color: ${selectColors(theme).bgColor};
-    min-height: 100dvh;
+    height: 100dvh;
     overflow-y: auto;
     padding: 1rem;
     left: 0;
@@ -163,14 +163,25 @@ export const PdfOutline = styled(Outline)<
         opacity: 0;
       }
     }
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: ${selectColors(theme).titleColor};
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: ${selectColors(theme).textColor};
+    }
 
     ul li {
       text-wrap: nowrap;
       width: 95%;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.6rem;
       a {
         color: ${selectColors(theme).textColor};
+        &:hover {
+          opacity: 0.5;
+        }
       }
       ul {
         padding-left: 1rem;
