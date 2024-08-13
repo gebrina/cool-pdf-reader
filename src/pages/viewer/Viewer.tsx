@@ -6,7 +6,7 @@ import {
   BiSkipPrevious,
 } from "react-icons/bi";
 import { FiMinus, FiPlus } from "react-icons/fi";
-import { Document, Outline, Page, pdfjs } from "react-pdf";
+import { Document, Page, pdfjs } from "react-pdf";
 // import "react-pdf/dist/Page/AnnotationLayer.css";
 // import "react-pdf/dist/Page/TextLayer.css";
 import { Navigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import { selectColors } from "../../utils";
 import {
   Button,
   PagingWrapper,
+  PdfOutline,
   PdfViewer,
   PdfViewerToolBar,
 } from "./Viewer.style";
@@ -33,6 +34,7 @@ export const Viewer = () => {
   const [zoomPercent, setZoomPercent] = useState(100);
   const [canvasWidth, setCanvasWidth] = useState(window.innerWidth);
   const [showOutline, setShowOutline] = useState(false);
+  const [exitAnimate, setExitAnimate] = useState(false);
 
   const ZOOM_BY = 25;
 
@@ -83,7 +85,20 @@ export const Viewer = () => {
   };
 
   const toggleOutlineVisibility = () => {
-    setShowOutline(!showOutline);
+    let waitForAnimation = 0;
+    if (waitForAnimation || showOutline) {
+      // add exit animation and start removing Outline from DOM
+      setExitAnimate(true);
+      clearTimeout(waitForAnimation);
+
+      // wait for .3sec until the exit  animaiton ends
+      waitForAnimation = setTimeout(() => {
+        setShowOutline(false);
+      }, 300);
+    } else {
+      setExitAnimate(false);
+      setShowOutline(true);
+    }
   };
 
   return (
@@ -114,7 +129,9 @@ export const Viewer = () => {
           onLoadSuccess={onDocumentLoadSuccess}
           file={pdfFile}
         >
-          {showOutline && <Outline />}
+          {showOutline && (
+            <PdfOutline exitAnimate={exitAnimate} theme={theme} />
+          )}
           <Page
             canvasBackground={selectColors(theme).bgColor}
             width={canvasWidth}
