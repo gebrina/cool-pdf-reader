@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BiMenuAltLeft,
   BiMenuAltRight,
@@ -35,8 +35,25 @@ export const Viewer = () => {
   const [canvasWidth, setCanvasWidth] = useState(window.innerWidth);
   const [showOutline, setShowOutline] = useState(false);
   const [exitAnimate, setExitAnimate] = useState(false);
+  const outlineRef = useRef<HTMLDivElement | null>(null);
 
   const ZOOM_BY = 25;
+
+  useEffect(() => {
+    const handleOutlineClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.nodeName === "A" && showOutline)
+        setTimeout(() => setShowOutline(false), 10); // wait for item click to update page number
+    };
+
+    // wait until the element is added to the DOM
+    const outlineTimeout = setTimeout(() => {
+      const outlineContainer = outlineRef.current;
+      outlineContainer?.addEventListener("click", handleOutlineClick);
+    }, 50);
+
+    return () => clearTimeout(outlineTimeout);
+  }, [showOutline]);
 
   if (!pdfFile) return <Navigate to={"/"} />;
 
@@ -130,7 +147,11 @@ export const Viewer = () => {
           file={pdfFile}
         >
           {showOutline && (
-            <PdfOutline exitAnimate={exitAnimate} theme={theme} />
+            <PdfOutline
+              inputRef={outlineRef}
+              exitAnimate={exitAnimate}
+              theme={theme}
+            />
           )}
           <Page
             canvasBackground={selectColors(theme).bgColor}
