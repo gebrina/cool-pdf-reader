@@ -68,7 +68,7 @@ export const Viewer = () => {
       if (target.nodeName === "A" && showOutline) {
         setExitAnimate(true);
         setTimeout(() => setShowOutline(false), 250);
-      } // wait for item click to update page number
+      } // wait for item click to update page number && exit animation
     };
     // wait until the element is added to the DOM
     const outlineTimeout = setTimeout(() => {

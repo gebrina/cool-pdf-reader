@@ -141,7 +141,7 @@ export const PdfOutline = styled(Outline)<
     top: 50px;
     text-align: left;
     z-index: 100;
-    width: 50%;
+    max-width: 300px;
     transition: all 0.5s ease;
     animation: ${exitAnimate ? "animate-hide-outline" : "animate-show-outline"}
       0.3s linear;
@@ -203,6 +203,9 @@ export const PdfOutline = styled(Outline)<
         content: ">";
         padding-right: 0.2rem;
       }
+    }
+    @media only screen and (max-width: 450px) {
+      max-width: 100%;
     }
   `
 );
