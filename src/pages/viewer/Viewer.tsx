@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
   BiMenuAltLeft,
   BiMenuAltRight,
@@ -134,6 +134,19 @@ export const Viewer = () => {
     }
   };
 
+  const handlePageNumberChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    const enteredPageNumber = parseInt(value);
+    if (
+      (enteredPageNumber >= 1 || enteredPageNumber <= numPages) &&
+      enteredPageNumber !== pageNumber
+    ) {
+      setPageNumber(enteredPageNumber);
+    }
+  };
+
   return (
     <PdfViewer className="pdf-viewer" theme={theme}>
       <PdfViewerToolBar theme={theme}>
@@ -181,8 +194,13 @@ export const Viewer = () => {
             <BiSkipPrevious />
           </Button>
           <>
-            <InputPageNumber type="text" value={pageNumber} />
-            / <InputPageNumber value={numPages} />
+            <InputPageNumber
+              onChange={handlePageNumberChange}
+              type="text"
+              value={pageNumber}
+            />
+            /
+            <InputPageNumber readOnly value={numPages} />
           </>
           <Button onClick={handleNextPage} theme={theme}>
             <BiSkipNext />
