@@ -207,12 +207,14 @@ export const PdfOutline = styled(Outline)<
   `
 );
 
-export const InputPageNumber = styled.input`
-  outline: none;
-  border: none;
-  width: 2rem;
-  text-align: center;
-  border-radius: 0.1rem;
-  font-size: 1rem;
-  padding: 0.1rem 0;
-`;
+export const InputPageNumber = styled.input<{ charLength?: number }>(
+  ({ charLength }) => css`
+    outline: none;
+    border: none;
+    width: ${charLength && charLength > 3 ? `${charLength / 1.5}rem` : "2rem"};
+    text-align: center;
+    border-radius: 0.1rem;
+    font-size: 1rem;
+    padding: 0.1rem 0;
+  `
+);

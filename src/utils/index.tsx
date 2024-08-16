@@ -32,3 +32,15 @@ export const selectColors = (theme: ThemeName): TSelectColor => {
 
   return selectedColors;
 };
+
+export const isOpenedOnMobile = () => {
+  const mobileOSs = ["iphone", "android"];
+  let isMobile = false;
+  for (let i = 0; i < mobileOSs.length; i++) {
+    if (navigator.userAgent.toLocaleLowerCase().includes(mobileOSs[i])) {
+      isMobile = true;
+      break;
+    }
+  }
+  return isMobile;
+};

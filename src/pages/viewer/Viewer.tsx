@@ -11,7 +11,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 // import "react-pdf/dist/Page/TextLayer.css";
 import { Navigate } from "react-router-dom";
 import { usePdfContext } from "../../context";
-import { selectColors } from "../../utils";
+import { isOpenedOnMobile, selectColors } from "../../utils";
 import {
   Button,
   InputPageNumber,
@@ -33,13 +33,22 @@ export const Viewer = () => {
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [zoomPercent, setZoomPercent] = useState(100);
-  const [canvasWidth, setCanvasWidth] = useState(window.innerWidth);
+  const [canvasWidth, setCanvasWidth] = useState(0);
   const [showOutline, setShowOutline] = useState(false);
   const [exitAnimate, setExitAnimate] = useState(false);
+
   const outlineRef = useRef<HTMLDivElement | null>(null);
   const activeLinkRef = useRef<HTMLElement | null>(null);
 
   const ZOOM_BY = 25;
+  const selectedPageNumber =
+    pageNumber > numPages ? numPages : pageNumber < 1 ? 1 : pageNumber;
+
+  useEffect(() => {
+    const isMoble = isOpenedOnMobile();
+    if (isMoble) setCanvasWidth(window.innerWidth);
+    else setCanvasWidth(window.innerWidth / 1.6);
+  }, []);
 
   useEffect(() => {
     const handleOutlineClick = (e: Event) => {
@@ -86,10 +95,10 @@ export const Viewer = () => {
 
     // Add horizontal scroll bar for the document
     const rootElement: HTMLElement = document.querySelector("html")!;
-    if (zoomPercent >= 100) {
+    if (canvasWidth >= window.innerWidth) {
       rootElement.style.overflowX = "auto";
     } else {
-      rootElement.style.overflowX = "auto";
+      rootElement.style.overflowX = "hidden";
     }
 
     if (zoomType === "increase") {
@@ -139,11 +148,11 @@ export const Viewer = () => {
   ) => {
     const { value } = event.target;
     const enteredPageNumber = parseInt(value);
-    if (
-      (enteredPageNumber >= 1 || enteredPageNumber <= numPages) &&
-      enteredPageNumber !== pageNumber
-    ) {
+    if (enteredPageNumber !== pageNumber && !isNaN(enteredPageNumber)) {
       setPageNumber(enteredPageNumber);
+      updateScrollPosition();
+    } else {
+      setPageNumber(0);
     }
   };
 
@@ -186,7 +195,7 @@ export const Viewer = () => {
             canvasBackground={selectColors(theme).bgColor}
             width={canvasWidth}
             onLoadError={(e) => console.error(e)}
-            pageNumber={pageNumber}
+            pageNumber={selectedPageNumber}
           />
         </Document>
         <PagingWrapper theme={theme}>
@@ -195,12 +204,17 @@ export const Viewer = () => {
           </Button>
           <>
             <InputPageNumber
+              charLength={pageNumber.toString().length}
               onChange={handlePageNumberChange}
               type="text"
-              value={pageNumber}
+              value={pageNumber == 0 ? "" : pageNumber}
             />
             /
-            <InputPageNumber readOnly value={numPages} />
+            <InputPageNumber
+              charLength={numPages.toString().length}
+              readOnly
+              value={numPages}
+            />
           </>
           <Button onClick={handleNextPage} theme={theme}>
             <BiSkipNext />
