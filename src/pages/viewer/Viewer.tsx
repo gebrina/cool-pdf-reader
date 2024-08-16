@@ -11,7 +11,13 @@ import { Document, Page, pdfjs } from "react-pdf";
 // import "react-pdf/dist/Page/TextLayer.css";
 import { Navigate } from "react-router-dom";
 import { usePdfContext } from "../../context";
-import { isOpenedOnMobile, selectColors } from "../../utils";
+import {
+  getBookInfo,
+  getBookName,
+  isOpenedOnMobile,
+  selectColors,
+  storeBookInfo,
+} from "../../utils";
 import {
   Button,
   InputPageNumber,
@@ -48,6 +54,11 @@ export const Viewer = () => {
     const isMoble = isOpenedOnMobile();
     if (isMoble) setCanvasWidth(window.innerWidth);
     else setCanvasWidth(window.innerWidth / 1.6);
+
+    // If the book is opened befrore update the page number
+    const bookName = getBookName();
+    const { name, page } = getBookInfo(bookName);
+    name && page && setPageNumber(page);
   }, []);
 
   useEffect(() => {
@@ -79,6 +90,11 @@ export const Viewer = () => {
 
     return () => clearTimeout(outlineTimeout);
   }, [showOutline]);
+
+  useEffect(() => {
+    const bookName = getBookName();
+    storeBookInfo({ name: bookName, page: selectedPageNumber });
+  }, [selectedPageNumber]);
 
   if (!pdfFile) return <Navigate to={"/"} />;
 

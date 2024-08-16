@@ -44,3 +44,29 @@ export const isOpenedOnMobile = () => {
   }
   return isMobile;
 };
+
+type TBookInfo = {
+  name: string;
+  page: number;
+};
+
+export const storeBookInfo = (bookInfo: TBookInfo): void => {
+  const books: TBookInfo[] = JSON.parse(localStorage.getItem("books") ?? "[]");
+  // update book's info if was saved before.
+  const book = books.find((book) => book.name == bookInfo.name);
+  if (book) book.page = bookInfo.page;
+  else books.push(bookInfo);
+  localStorage.setItem("books", JSON.stringify(books));
+};
+
+export const getBookInfo = (bookName: string): TBookInfo => {
+  const books = localStorage.getItem("books")!;
+  const parsedBooks = JSON.parse(books);
+  return parsedBooks.find((book: TBookInfo) => book.name == bookName) || {};
+};
+
+export const getBookName = (): string => {
+  const pathname = location.pathname;
+  const name = decodeURI(pathname.substring(1));
+  return name;
+};
