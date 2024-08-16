@@ -61,10 +61,14 @@ export const PagingWrapper = styled.div<TStyleProps>(
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.2rem;
     transform: translateX(-50%);
     color: ${selectColors(theme).textColor};
     background-color: ${selectColors(theme).bgColor};
+    input {
+      color: inherit;
+      background-color: ${selectColors(theme).titleColor};
+    }
   `
 );
 
@@ -185,8 +189,30 @@ export const PdfOutline = styled(Outline)<
       }
       ul {
         padding-left: 1rem;
-        opacity: 0.8;
+        :not(:has(.active)) {
+          opacity: 0.8;
+        }
+      }
+    }
+    .active {
+      text-decoration: underline;
+      text-decoration-color: ${selectColors(theme).titleColor};
+      text-decoration-thickness: 0.2rem;
+      opacity: 1 !important;
+      &::before {
+        content: ">";
+        padding-right: 0.2rem;
       }
     }
   `
 );
+
+export const InputPageNumber = styled.input`
+  outline: none;
+  border: none;
+  width: 2rem;
+  text-align: center;
+  border-radius: 0.1rem;
+  font-size: 1rem;
+  padding: 0.1rem 0;
+`;

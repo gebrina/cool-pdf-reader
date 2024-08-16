@@ -14,6 +14,7 @@ import { usePdfContext } from "../../context";
 import { selectColors } from "../../utils";
 import {
   Button,
+  InputPageNumber,
   PagingWrapper,
   PdfOutline,
   PdfViewer,
@@ -36,19 +37,34 @@ export const Viewer = () => {
   const [showOutline, setShowOutline] = useState(false);
   const [exitAnimate, setExitAnimate] = useState(false);
   const outlineRef = useRef<HTMLDivElement | null>(null);
+  const activeLinkRef = useRef<HTMLElement | null>(null);
 
   const ZOOM_BY = 25;
 
   useEffect(() => {
     const handleOutlineClick = (e: Event) => {
       const target = e.target as HTMLElement;
-      if (target.nodeName === "A" && showOutline)
-        setTimeout(() => setShowOutline(false), 10); // wait for item click to update page number
+      activeLinkRef.current = target;
+      if (target.nodeName === "A" && showOutline) {
+        setExitAnimate(true);
+        setTimeout(() => setShowOutline(false), 250);
+      } // wait for item click to update page number
     };
-
     // wait until the element is added to the DOM
     const outlineTimeout = setTimeout(() => {
       const outlineContainer = outlineRef.current;
+      const links = outlineContainer?.querySelectorAll("a");
+      links?.forEach((link) => {
+        if (link.textContent == activeLinkRef.current?.textContent) {
+          link.classList.add("active");
+          const { top } = link.getBoundingClientRect();
+          const toolbarHeight = 50;
+          outlineContainer?.scrollTo({
+            top: top - toolbarHeight,
+            behavior: "smooth",
+          });
+        }
+      });
       outlineContainer?.addEventListener("click", handleOutlineClick);
     }, 50);
 
@@ -159,20 +175,14 @@ export const Viewer = () => {
             onLoadError={(e) => console.error(e)}
             pageNumber={pageNumber}
           />
-
-          {/* <Thumbnail pageNumber={pageNumber} height={500} /> */}
-          {/* 
-          {numPages > 0 &&
-            Array.from({ length: numPages }).map((_, i) => (
-              <Page pageNumber={i + 1} key={"page" + pageNumber * i} />
-            ))} */}
         </Document>
         <PagingWrapper theme={theme}>
           <Button onClick={handlePrevPage} theme={theme}>
             <BiSkipPrevious />
           </Button>
           <>
-            {pageNumber} of {numPages}
+            <InputPageNumber type="text" value={pageNumber} />
+            / <InputPageNumber value={numPages} />
           </>
           <Button onClick={handleNextPage} theme={theme}>
             <BiSkipNext />
