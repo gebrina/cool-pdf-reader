@@ -7,7 +7,6 @@ export const PdfContainer = styled.div<ITheme>(
   ({ theme }) => css`
     background-size: cover;
     background-position: center;
-    height: 100%;
     background-repeat: no-repeat;
     background-blend-mode: luminosity;
     background-color: ${selectColors(theme).bgColor};
@@ -16,9 +15,9 @@ export const PdfContainer = styled.div<ITheme>(
     justify-content: center;
     flex-direction: column;
     gap: 50px;
-
     &:not(:has(.pdf-viewer)) {
       transform: scaleX(-1);
+      height: 100%;
     }
 
     &::before {

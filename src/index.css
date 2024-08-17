@@ -2,6 +2,10 @@
   font-size: 17px;
   overflow-x: hidden;
   height: 100%;
+  /* no need  for scroll if pdf not loaded */
+  :has(.react-pdf__message) {
+    overflow: hidden;
+  }
 }
 
 body,

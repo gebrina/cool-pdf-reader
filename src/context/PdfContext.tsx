@@ -36,11 +36,10 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
 
   const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    event.target.value = "";
     if (file) {
       const fileUrl = URL.createObjectURL(file);
       setPdfFile(fileUrl);
-      navigate(`/${file.name}`);
+      navigate(file.name);
     }
   };
 

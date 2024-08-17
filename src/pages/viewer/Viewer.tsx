@@ -7,9 +7,9 @@ import {
 } from "react-icons/bi";
 import { FiMinus, FiPlus, FiSettings } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
+import { NavLink } from "react-router-dom";
 // import "react-pdf/dist/Page/AnnotationLayer.css";
 // import "react-pdf/dist/Page/TextLayer.css";
-import { Navigate, NavLink } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import {
   getBookInfo,
@@ -96,7 +96,7 @@ export const Viewer = () => {
     storeBookInfo({ name: bookName, page: selectedPageNumber });
   }, [selectedPageNumber]);
 
-  if (!pdfFile) return <Navigate to={"/"} />;
+  // if (!pdfFile) return <Navigate to={"/"} />;
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }): void => {
     setNumPages(numPages);

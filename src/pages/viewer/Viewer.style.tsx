@@ -40,6 +40,13 @@ export const PdfViewer = styled.div<TStyleProps>(
       height: 100%;
     }
 
+    & .react-pdf__message {
+      position: relative;
+      z-index: 10;
+      color: ${selectColors(theme).titleColor};
+      margin-top: 2rem;
+      font-size: 2rem;
+    }
     & .textLayer {
       display: none;
       /* zoom: 2; */
