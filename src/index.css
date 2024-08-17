@@ -1,12 +1,12 @@
 :root {
   font-size: 17px;
   overflow-x: hidden;
+  height: 100%;
 }
 
 body,
 main {
   height: 100%;
-  width: 100dvw;
 }
 
 * {

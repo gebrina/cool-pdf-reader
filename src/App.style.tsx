@@ -7,7 +7,7 @@ export const PdfContainer = styled.div<ITheme>(
   ({ theme }) => css`
     background-size: cover;
     background-position: center;
-    min-height: 100dvh;
+    height: 100%;
     background-repeat: no-repeat;
     background-blend-mode: luminosity;
     background-color: ${selectColors(theme).bgColor};

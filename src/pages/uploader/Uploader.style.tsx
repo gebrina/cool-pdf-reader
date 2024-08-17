@@ -35,6 +35,11 @@ export const Title = styled.h3<ITheme>(
 
     @media only screen and (max-width: 600px) {
       font-size: 2.5rem;
+      span {
+        display: flex;
+        justify-content: flex-start;
+        padding: 0;
+      }
     }
   `
 );
