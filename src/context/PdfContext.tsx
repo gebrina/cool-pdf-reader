@@ -4,6 +4,7 @@ import {
   FC,
   ReactNode,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,17 +13,17 @@ import { ThemeName } from "../common";
 type TPdfContext = {
   theme: ThemeName;
   pdfFile: string;
-  OnInputFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  OnChangeTheme: (theme: ThemeName) => void;
+  onInputFileChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeTheme: (theme: ThemeName) => void;
 };
 
 const PdfContext = createContext<TPdfContext>({
   theme: "default",
   pdfFile: "",
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  OnInputFileChange: (_event: ChangeEvent<HTMLInputElement>) => {},
+  onInputFileChange: (_event: ChangeEvent<HTMLInputElement>) => {},
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  OnChangeTheme: (_theme: ThemeName) => {},
+  onChangeTheme: (_theme: ThemeName) => {},
 });
 
 export const PdfContextProvider: FC<{ children: ReactNode }> = ({
@@ -44,17 +45,26 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
   };
 
   const handleChangeTheme = (theme: ThemeName) => {
-    const selectdThemeName = themeName === theme ? themeName : theme;
-    // WIP => store theme in local storage
-    setThemeName(selectdThemeName);
+    const themeInfo = JSON.stringify(theme);
+    localStorage.setItem("theme", themeInfo);
+    setThemeName(theme);
   };
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme) {
+      const themeName = JSON.parse(theme);
+      setThemeName(themeName);
+    }
+  }, []);
+
   return (
     <PdfContext.Provider
       value={{
         theme: themeName,
         pdfFile,
-        OnChangeTheme: handleChangeTheme,
-        OnInputFileChange: handleInputFileChange,
+        onChangeTheme: handleChangeTheme,
+        onInputFileChange: handleInputFileChange,
       }}
     >
       {children}

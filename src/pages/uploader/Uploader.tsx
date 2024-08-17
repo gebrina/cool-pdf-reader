@@ -4,7 +4,7 @@ import { usePdfContext } from "../../context";
 import { InputFile, InputLabel, PdfUploader, Title } from "./Uploader.style";
 
 export const Uploader = () => {
-  const { theme, OnInputFileChange } = usePdfContext();
+  const { theme, onInputFileChange } = usePdfContext();
 
   return (
     <PdfUploader theme={theme}>
@@ -17,7 +17,7 @@ export const Uploader = () => {
       </Title>
       <InputFile
         accept="application/pdf"
-        onChange={OnInputFileChange}
+        onChange={onInputFileChange}
         id="input-file"
         type="file"
       />

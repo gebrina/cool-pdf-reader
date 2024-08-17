@@ -9,7 +9,7 @@ import {
 } from "./Setting.style";
 
 export const Setting = () => {
-  const { theme } = usePdfContext();
+  const { theme, onChangeTheme } = usePdfContext();
 
   return (
     <SettingsWrapper className="settings" theme={theme}>
@@ -20,15 +20,15 @@ export const Setting = () => {
         <Title theme={theme} size={1.5}>
           Select Theme
         </Title>
-        <ThemeButton theme="default">
+        <ThemeButton onClick={() => onChangeTheme("default")} theme="default">
           <BiBulb />
           Default
         </ThemeButton>
-        <ThemeButton theme="light">
+        <ThemeButton onClick={() => onChangeTheme("light")} theme="light">
           <FiSun />
           Light
         </ThemeButton>
-        <ThemeButton theme="dark">
+        <ThemeButton onClick={() => onChangeTheme("dark")} theme="dark">
           <FiMoon />
           Dark
         </ThemeButton>
