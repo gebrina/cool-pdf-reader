@@ -16,7 +16,7 @@ export const SettingsWrapper = styled.div<TStyleProps>(
     max-width: 600px;
     width: 100%;
     padding: 1rem;
-    border-top: 1rem solid ${selectColors(theme).titleColor};
+    border-top: 1rem solid ${selectColors(theme).textColor};
     border-bottom: 1rem solid ${selectColors(theme).titleColor};
     border-radius: 2rem;
     margin: 0 auto;

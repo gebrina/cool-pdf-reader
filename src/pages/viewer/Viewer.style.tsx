@@ -66,8 +66,8 @@ export const PagingWrapper = styled.div<TStyleProps>(
     color: ${selectColors(theme).textColor};
     background-color: ${selectColors(theme).bgColor};
     input {
-      color: inherit;
-      background-color: ${selectColors(theme).titleColor};
+      color: ${selectColors(theme).bgColor};
+      background-color: ${selectColors(theme).textColor};
     }
   `
 );
@@ -83,7 +83,7 @@ export const Button = styled.button<TButtonProps>(
     cursor: pointer;
     svg {
       font-size: ${zoom ? "" : "2.5rem"};
-      color: ${zoom ? "" : `${selectColors(theme).titleColor}`};
+      color: ${zoom ? "" : `${selectColors(theme).textColor}`};
     }
   `
 );

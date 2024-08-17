@@ -13,8 +13,8 @@ export const Setting = () => {
 
   return (
     <SettingsWrapper className="settings" theme={theme}>
-      <Title size={3} theme={theme}>
-        Prefrences
+      <Title size={2.5} theme={theme}>
+        Manage ur Preferences
       </Title>
       <ThemeWrapper>
         <Title theme={theme} size={1.5}>
