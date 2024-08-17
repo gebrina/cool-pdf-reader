@@ -28,8 +28,18 @@ export const Title = styled.h1<TTitleProps>(
   ({ theme, size }) => css`
     margin-bottom: 1rem;
     font-size: ${size}rem;
-    opacity: ${size / 1.3};
+    opacity: ${size / 2};
     color: ${selectColors(theme).titleColor};
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 0.5rem;
+      :hover {
+        opacity: 0.5;
+        cursor: pointer;
+        transform: translateY(-0.1rem);
+      }
+    }
   `
 );
 

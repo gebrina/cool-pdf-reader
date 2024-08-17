@@ -1,5 +1,5 @@
 import { BiBulb } from "react-icons/bi";
-import { FiMoon, FiSun } from "react-icons/fi";
+import { FiArrowLeft, FiMoon, FiSun } from "react-icons/fi";
 import { usePdfContext } from "../../context";
 import {
   SettingsWrapper,
@@ -11,9 +11,12 @@ import {
 export const Setting = () => {
   const { theme, onChangeTheme } = usePdfContext();
 
+  const goBack = () => history.go(-1);
+
   return (
     <SettingsWrapper className="settings" theme={theme}>
       <Title size={2.5} theme={theme}>
+        <FiArrowLeft onClick={goBack} />
         Manage ur Preferences
       </Title>
       <ThemeWrapper>
