@@ -5,11 +5,11 @@ import {
   BiSkipNext,
   BiSkipPrevious,
 } from "react-icons/bi";
-import { FiMinus, FiPlus } from "react-icons/fi";
+import { FiMinus, FiPlus, FiSettings } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
 // import "react-pdf/dist/Page/AnnotationLayer.css";
 // import "react-pdf/dist/Page/TextLayer.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import {
   getBookInfo,
@@ -193,6 +193,9 @@ export const Viewer = () => {
             <FiPlus aria-label="Zoom In" />
           </Button>
         </div>
+        <NavLink to="/settings">
+          <FiSettings />
+        </NavLink>
       </PdfViewerToolBar>
       <>
         <Document

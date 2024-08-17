@@ -97,7 +97,8 @@ export const PdfViewerToolBar = styled.div<TStyleProps>(
     top: 0;
     left: 0;
     display: grid;
-    grid-template-columns: 50px 1fr auto;
+    grid-template-columns: 50px 1fr 50px;
+    align-content: center;
     gap: 0.5rem;
     background-color: ${selectColors(theme).bgColor};
     border-bottom: 2px solid ${selectColors(theme).titleColor};
@@ -124,6 +125,14 @@ export const PdfViewerToolBar = styled.div<TStyleProps>(
       svg {
         font-size: 1.5rem;
       }
+    }
+
+    //settings icon
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: ${selectColors(theme).textColor};
     }
   `
 );

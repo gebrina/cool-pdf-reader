@@ -53,7 +53,7 @@ type TBookInfo = {
 export const storeBookInfo = (bookInfo: TBookInfo): void => {
   const books: TBookInfo[] = JSON.parse(localStorage.getItem("books") ?? "[]");
   // update book's info if was saved before.
-  const book = books.find((book) => book.name == bookInfo.name);
+  const book = books?.find((book) => book.name == bookInfo.name);
   if (book) book.page = bookInfo.page;
   else books.push(bookInfo);
   localStorage.setItem("books", JSON.stringify(books));
@@ -62,7 +62,7 @@ export const storeBookInfo = (bookInfo: TBookInfo): void => {
 export const getBookInfo = (bookName: string): TBookInfo => {
   const books = localStorage.getItem("books")!;
   const parsedBooks = JSON.parse(books);
-  return parsedBooks.find((book: TBookInfo) => book.name == bookName) || {};
+  return parsedBooks?.find((book: TBookInfo) => book.name == bookName) || {};
 };
 
 export const getBookName = (): string => {
