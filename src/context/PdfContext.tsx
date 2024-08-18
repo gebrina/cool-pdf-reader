@@ -9,6 +9,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeName } from "../common";
+import { storeBookInfo, toBase64 } from "../utils";
 
 type TPdfContext = {
   theme: ThemeName;
@@ -34,12 +35,18 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
   const [themeName, setThemeName] = useState<ThemeName>("default");
   const [pdfFile, setPdfFile] = useState("");
 
-  const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputFileChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
+      const { name } = file;
+      const fileName = name.substring(0, name.length - 4);
+      const base64File = await toBase64(file);
+      await storeBookInfo({ file: base64File, name: fileName });
       const fileUrl = URL.createObjectURL(file);
       setPdfFile(fileUrl);
-      navigate(file.name);
+      navigate(fileName);
     }
   };
 

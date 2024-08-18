@@ -7,9 +7,9 @@ import {
 } from "react-icons/bi";
 import { FiMinus, FiPlus, FiSettings } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
 import { NavLink } from "react-router-dom";
-// import "react-pdf/dist/Page/AnnotationLayer.css";
-// import "react-pdf/dist/Page/TextLayer.css";
 import { usePdfContext } from "../../context";
 import {
   getBookInfo,
@@ -54,11 +54,6 @@ export const Viewer = () => {
     const isMoble = isOpenedOnMobile();
     if (isMoble) setCanvasWidth(window.innerWidth);
     else setCanvasWidth(window.innerWidth / 1.6);
-
-    // If the book is opened befrore update the page number
-    const bookName = getBookName();
-    const { name, page } = getBookInfo(bookName);
-    name && page && setPageNumber(page);
   }, []);
 
   useEffect(() => {
@@ -70,6 +65,7 @@ export const Viewer = () => {
         setTimeout(() => setShowOutline(false), 250);
       } // wait for item click to update page number && exit animation
     };
+
     // wait until the element is added to the DOM
     const outlineTimeout = setTimeout(() => {
       const outlineContainer = outlineRef.current;
@@ -92,8 +88,18 @@ export const Viewer = () => {
   }, [showOutline]);
 
   useEffect(() => {
-    const bookName = getBookName();
-    storeBookInfo({ name: bookName, page: selectedPageNumber });
+    // If the book is opened before update the page number if not store it.
+    const updateBookInfo = async () => {
+      const bookName = getBookName();
+      const book = await getBookInfo(bookName);
+      console.log(book, bookName);
+      if (book && book?.name) {
+        book?.page && setPageNumber(book.page);
+        console.log("ah opened before", book);
+        await storeBookInfo({ name: bookName, page: selectedPageNumber || 1 });
+      }
+    };
+    updateBookInfo();
   }, [selectedPageNumber]);
 
   // if (!pdfFile) return <Navigate to={"/"} />;
