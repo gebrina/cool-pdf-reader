@@ -50,14 +50,28 @@ export const Viewer = () => {
     pageNumber > numPages ? numPages : pageNumber < 1 ? 1 : pageNumber;
 
   useEffect(() => {
-    const canvasWidth = getCanvasWidth();
-    setCanvasWidth(canvasWidth);
+    const udpateCanvasWidth = () => {
+      const canvasWidth = getCanvasWidth();
+      setCanvasWidth(canvasWidth);
+    };
+
+    udpateCanvasWidth();
+    const handleWindowResize = () => {
+      // Wait for 500ml before updating the canvas width -> for perforamnce purpose
+      let timeOut = 0;
+      if (timeOut) clearTimeout(timeOut);
+      timeOut = setTimeout(() => udpateCanvasWidth(), 500);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
     // Reset book's page number if it was read before
     const updatePageNumber = async () => {
       const book = await getBookInfo();
       book && book.page && setPageNumber(book.page);
     };
     updatePageNumber();
+
+    return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
   useEffect(() => {
