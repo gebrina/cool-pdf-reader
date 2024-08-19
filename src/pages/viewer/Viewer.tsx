@@ -54,6 +54,14 @@ export const Viewer = () => {
     const isMoble = isOpenedOnMobile();
     if (isMoble) setCanvasWidth(window.innerWidth);
     else setCanvasWidth(window.innerWidth / 1.6);
+
+    // Reset book's page number if it was read before
+    const updatePageNumber = async () => {
+      const bookName = getBookName();
+      const book = await getBookInfo(bookName);
+      book && book.page && setPageNumber(book.page);
+    };
+    updatePageNumber();
   }, []);
 
   useEffect(() => {
@@ -92,14 +100,12 @@ export const Viewer = () => {
     const updateBookInfo = async () => {
       const bookName = getBookName();
       const book = await getBookInfo(bookName);
-      console.log(book, bookName);
       if (book && book?.name) {
-        book?.page && setPageNumber(book.page);
-        console.log("ah opened before", book);
         await storeBookInfo({ name: bookName, page: selectedPageNumber || 1 });
       }
     };
     updateBookInfo();
+    console.log("new page number", selectedPageNumber);
   }, [selectedPageNumber]);
 
   // if (!pdfFile) return <Navigate to={"/"} />;
@@ -117,7 +123,7 @@ export const Viewer = () => {
 
     // Add horizontal scroll bar for the document
     const rootElement: HTMLElement = document.querySelector("html")!;
-    if (canvasWidth >= window.innerWidth) {
+    if (canvasWidth > window.innerWidth) {
       rootElement.style.overflowX = "auto";
     } else {
       rootElement.style.overflowX = "hidden";
