@@ -13,7 +13,6 @@ import { NavLink } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import {
   getBookInfo,
-  getBookName,
   isOpenedOnMobile,
   selectColors,
   storeBookInfo,
@@ -57,8 +56,7 @@ export const Viewer = () => {
 
     // Reset book's page number if it was read before
     const updatePageNumber = async () => {
-      const bookName = getBookName();
-      const book = await getBookInfo(bookName);
+      const book = await getBookInfo();
       book && book.page && setPageNumber(book.page);
     };
     updatePageNumber();
@@ -96,19 +94,15 @@ export const Viewer = () => {
   }, [showOutline]);
 
   useEffect(() => {
-    // If the book is opened before update the page number if not store it.
+    // If the book was opened before update the page number, if not store it.
     const updateBookInfo = async () => {
-      const bookName = getBookName();
-      const book = await getBookInfo(bookName);
-      if (book && book?.name) {
-        await storeBookInfo({ name: bookName, page: selectedPageNumber || 1 });
+      const book = await getBookInfo();
+      if (book && book) {
+        await storeBookInfo({ name: book.name, page: selectedPageNumber || 1 });
       }
     };
     updateBookInfo();
-    console.log("new page number", selectedPageNumber);
   }, [selectedPageNumber]);
-
-  // if (!pdfFile) return <Navigate to={"/"} />;
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }): void => {
     setNumPages(numPages);
@@ -210,25 +204,27 @@ export const Viewer = () => {
         </NavLink>
       </PdfViewerToolBar>
       <>
-        <Document
-          onItemClick={({ pageNumber }) => setPageNumber(pageNumber)}
-          onLoadSuccess={onDocumentLoadSuccess}
-          file={pdfFile}
-        >
-          {showOutline && (
-            <PdfOutline
-              inputRef={outlineRef}
-              exitAnimate={exitAnimate}
-              theme={theme}
+        {pdfFile && (
+          <Document
+            onItemClick={({ pageNumber }) => setPageNumber(pageNumber)}
+            onLoadSuccess={onDocumentLoadSuccess}
+            file={pdfFile}
+          >
+            {showOutline && (
+              <PdfOutline
+                inputRef={outlineRef}
+                exitAnimate={exitAnimate}
+                theme={theme}
+              />
+            )}
+            <Page
+              canvasBackground={selectColors(theme).bgColor}
+              width={canvasWidth}
+              onLoadError={(e) => console.error(e)}
+              pageNumber={selectedPageNumber}
             />
-          )}
-          <Page
-            canvasBackground={selectColors(theme).bgColor}
-            width={canvasWidth}
-            onLoadError={(e) => console.error(e)}
-            pageNumber={selectedPageNumber}
-          />
-        </Document>
+          </Document>
+        )}
         <PagingWrapper theme={theme}>
           <Button onClick={handlePrevPage} theme={theme}>
             <BiSkipPrevious />

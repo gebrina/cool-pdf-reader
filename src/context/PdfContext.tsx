@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeName } from "../common";
-import { storeBookInfo, toBase64 } from "../utils";
+import { getBookInfo, storeBookInfo, toBase64 } from "../utils";
 
 type TPdfContext = {
   theme: ThemeName;
@@ -57,6 +57,23 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
+    // Reset pdf file if user reloads the Viewer page
+    const updatePdfFile = async () => {
+      const book = await getBookInfo();
+      if (book.file) {
+        fetch(book.file)
+          .then((res) => res.blob())
+          .then((response) => {
+            const file = new File([response], book.name);
+            const fileUrl = URL.createObjectURL(file);
+            setPdfFile(fileUrl);
+          })
+          .catch((e) => console.log(e));
+      }
+    };
+    updatePdfFile();
+
+    // Update the theme if user has updated before
     const theme = localStorage.getItem("theme");
     if (theme) {
       const themeName = JSON.parse(theme);

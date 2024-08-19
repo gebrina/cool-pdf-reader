@@ -107,8 +107,9 @@ export const storeBookInfo = async (bookInfo: TBookInfo): Promise<void> => {
   }
 };
 
-export const getBookInfo = async (bookName: string): Promise<TBookInfo> => {
+export const getBookInfo = async (): Promise<TBookInfo> => {
   const books = await getAllBooks();
+  const bookName = getBookName();
   const book = books.find((book) => book.name === bookName) ?? {};
   return book as TBookInfo;
 };
