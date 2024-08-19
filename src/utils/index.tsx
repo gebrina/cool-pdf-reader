@@ -33,16 +33,16 @@ export const selectColors = (theme: ThemeName): TSelectColor => {
   return selectedColors;
 };
 
-export const isOpenedOnMobile = () => {
-  const mobileOSs = ["iphone", "android"];
-  let isMobile = false;
-  for (let i = 0; i < mobileOSs.length; i++) {
-    if (navigator.userAgent.toLocaleLowerCase().includes(mobileOSs[i])) {
-      isMobile = true;
-      break;
-    }
-  }
-  return isMobile;
+export const getCanvasWidth = () => {
+  const { innerWidth } = globalThis;
+  let canvasWidth = innerWidth;
+
+  if (innerWidth > 700 && innerWidth < 900) canvasWidth = innerWidth / 1.3;
+  else if (innerWidth > 900 && innerWidth < 1200)
+    canvasWidth = innerWidth / 1.8;
+  else if (innerWidth > 1200) canvasWidth = innerWidth / 2;
+
+  return canvasWidth;
 };
 
 type TBookInfo = {

@@ -13,7 +13,7 @@ import { NavLink } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import {
   getBookInfo,
-  isOpenedOnMobile,
+  getCanvasWidth,
   selectColors,
   storeBookInfo,
 } from "../../utils";
@@ -50,10 +50,8 @@ export const Viewer = () => {
     pageNumber > numPages ? numPages : pageNumber < 1 ? 1 : pageNumber;
 
   useEffect(() => {
-    const isMoble = isOpenedOnMobile();
-    if (isMoble) setCanvasWidth(window.innerWidth);
-    else setCanvasWidth(window.innerWidth / 1.6);
-
+    const canvasWidth = getCanvasWidth();
+    setCanvasWidth(canvasWidth);
     // Reset book's page number if it was read before
     const updatePageNumber = async () => {
       const book = await getBookInfo();
