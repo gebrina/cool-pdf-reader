@@ -5,11 +5,11 @@ import {
   BiSkipNext,
   BiSkipPrevious,
 } from "react-icons/bi";
-import { FiMinus, FiPlus, FiSettings } from "react-icons/fi";
+import { FiMinus, FiPlus } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import { NavLink } from "react-router-dom";
+import { Select, TSelectOptions } from "../../components/select/Select";
 import { usePdfContext } from "../../context";
 import { getBookInfo, getCanvasWidth, storeBookInfo } from "../../utils";
 import {
@@ -36,6 +36,12 @@ export const Viewer = () => {
   const [canvasWidth, setCanvasWidth] = useState(0);
   const [showOutline, setShowOutline] = useState(false);
   const [exitAnimate, setExitAnimate] = useState(false);
+
+  const themeOptions: TSelectOptions[] = [
+    { id: 1, label: "Default", value: "default" },
+    { id: 2, label: "Light", value: "light" },
+    { id: 3, label: "Dark", value: "dark" },
+  ];
 
   const outlineRef = useRef<HTMLDivElement | null>(null);
   const activeLinkRef = useRef<HTMLElement | null>(null);
@@ -185,6 +191,8 @@ export const Viewer = () => {
     }
   };
 
+  const handleSelect = (theme: TSelectOptions) => {};
+
   return (
     <PdfViewer className="pdf-viewer" canvasWidth={canvasWidth} theme={theme}>
       <PdfViewerToolBar theme={theme}>
@@ -206,9 +214,7 @@ export const Viewer = () => {
             <FiPlus aria-label="Zoom In" />
           </Button>
         </div>
-        <NavLink to="/settings">
-          <FiSettings />
-        </NavLink>
+        <Select selectOptions={themeOptions} onSelect={handleSelect} />
       </PdfViewerToolBar>
       <>
         {pdfFile && (

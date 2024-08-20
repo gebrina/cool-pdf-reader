@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { usePdfContext } from "../../context";
 import { Button, PageNotFound } from "./NotFound.style";
 
-const NotFound = () => {
+export const NotFound = () => {
   const { theme } = usePdfContext();
   const navigate = useNavigate();
 
@@ -18,5 +18,3 @@ const NotFound = () => {
     </PageNotFound>
   );
 };
-
-export default NotFound;

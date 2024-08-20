@@ -1,15 +1,11 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Outline } from "react-pdf";
-import { ThemeName } from "../../common";
+import { ITheme } from "../../common";
 import { selectColors } from "../../utils";
 
-type TStyleProps = {
-  theme: ThemeName;
-  canvasWidth?: number;
-};
-
-export const PdfViewer = styled.div<TStyleProps>(
+type TPdfViewrProps = ITheme & { canvasWidth: number };
+export const PdfViewer = styled.div<TPdfViewrProps>(
   ({ theme, canvasWidth }) => css`
     margin: 50px 0px;
     display: grid;
@@ -61,7 +57,7 @@ export const PdfViewer = styled.div<TStyleProps>(
   `
 );
 
-export const PagingWrapper = styled.div<TStyleProps>(
+export const PagingWrapper = styled.div<ITheme>(
   ({ theme }) => css`
     position: fixed;
     bottom: 0;
@@ -82,7 +78,7 @@ export const PagingWrapper = styled.div<TStyleProps>(
   `
 );
 
-type TButtonProps = TStyleProps & { zoom?: boolean };
+type TButtonProps = ITheme & { zoom?: boolean };
 
 export const Button = styled.button<TButtonProps>(
   ({ theme, zoom }) => css`
@@ -98,7 +94,7 @@ export const Button = styled.button<TButtonProps>(
   `
 );
 
-export const PdfViewerToolBar = styled.div<TStyleProps>(
+export const PdfViewerToolBar = styled.div<ITheme>(
   ({ theme }) => css`
     height: 50px;
     width: 100%;
@@ -147,9 +143,7 @@ export const PdfViewerToolBar = styled.div<TStyleProps>(
   `
 );
 
-export const PdfOutline = styled(Outline)<
-  TStyleProps & { exitAnimate: boolean }
->(
+export const PdfOutline = styled(Outline)<ITheme & { exitAnimate: boolean }>(
   ({ exitAnimate, theme }) => css`
     position: fixed;
     background-color: ${selectColors(theme).bgColor};
