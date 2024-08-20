@@ -18,7 +18,7 @@ export const SelectWrapper = styled.div<ITheme>(
     > div {
       opacity: 1;
       transition: all 0.5s ease-in;
-      transform: rotate(180deg) translateX(-100%);
+      /* transform: rotate(180deg) translateX(-100%); */
     }
     &:hover {
       > div {
@@ -53,7 +53,8 @@ export const Option = styled.div<ITheme & { selected: boolean }>(
     }
     cursor: pointer;
     transition: all 0.2s ease;
-    &:hover {
+    &:hover,
+    &.active {
       color: ${selectColors(theme).bgColor};
       background-color: ${selectColors(theme).textColor};
     }

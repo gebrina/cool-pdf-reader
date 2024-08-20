@@ -12,6 +12,7 @@ import { FiMinus, FiPlus } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import { ThemeName } from "../../common";
 import { Select, TSelectOptions } from "../../components/select/Select";
 import { usePdfContext } from "../../context";
 import { getBookInfo, getCanvasWidth, storeBookInfo } from "../../utils";
@@ -32,7 +33,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 type TZoomType = "decrease" | "increase";
 
 export const Viewer = () => {
-  const { theme, pdfFile } = usePdfContext();
+  const { theme, pdfFile, onChangeTheme } = usePdfContext();
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [zoomPercent, setZoomPercent] = useState(100);
@@ -113,7 +114,7 @@ export const Viewer = () => {
     // If the book was opened before update the page number, if not store it.
     const updateBookInfo = async () => {
       const book = await getBookInfo();
-      if (book && book) {
+      if (book && book.name) {
         await storeBookInfo({ name: book.name, page: selectedPageNumber || 1 });
       }
     };
@@ -194,7 +195,8 @@ export const Viewer = () => {
     }
   };
 
-  const handleSelect = (theme: TSelectOptions) => {};
+  const handleSelect = (theme: TSelectOptions) =>
+    onChangeTheme(theme.value as ThemeName);
 
   return (
     <PdfViewer className="pdf-viewer" canvasWidth={canvasWidth} theme={theme}>
