@@ -1,9 +1,12 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
+  BiBulb,
   BiMenuAltLeft,
   BiMenuAltRight,
+  BiMoon,
   BiSkipNext,
   BiSkipPrevious,
+  BiSun,
 } from "react-icons/bi";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
@@ -38,9 +41,9 @@ export const Viewer = () => {
   const [exitAnimate, setExitAnimate] = useState(false);
 
   const themeOptions: TSelectOptions[] = [
-    { id: 1, label: "Default", value: "default" },
-    { id: 2, label: "Light", value: "light" },
-    { id: 3, label: "Dark", value: "dark" },
+    { id: 1, label: "Default", value: "default", icon: <BiBulb /> },
+    { id: 2, label: "Light", value: "light", icon: <BiSun /> },
+    { id: 3, label: "Dark", value: "dark", icon: <BiMoon /> },
   ];
 
   const outlineRef = useRef<HTMLDivElement | null>(null);
@@ -214,7 +217,12 @@ export const Viewer = () => {
             <FiPlus aria-label="Zoom In" />
           </Button>
         </div>
-        <Select selectOptions={themeOptions} onSelect={handleSelect} />
+        <Select
+          label="Select Theme"
+          theme={theme}
+          selectOptions={themeOptions}
+          onSelect={handleSelect}
+        />
       </PdfViewerToolBar>
       <>
         {pdfFile && (
