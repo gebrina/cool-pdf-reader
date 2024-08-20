@@ -15,6 +15,18 @@ export const SelectWrapper = styled.div<ITheme>(
     flex-direction: column;
     font-weight: 500;
     gap: 0;
+    > div {
+      opacity: 0;
+      transition: all 0.5s ease-in;
+      transform: rotate(180deg) translateX(-100%);
+    }
+    &:hover {
+      > div {
+        display: block;
+        opacity: 1;
+        transform: rotate(0) translateX(0);
+      }
+    }
   `
 );
 
@@ -35,7 +47,6 @@ export const Option = styled.div<ITheme>(
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
     }
-
     cursor: pointer;
     transition: all 0.2s ease;
     &:hover {
@@ -49,6 +60,11 @@ export const SelectLabel = styled.label<ITheme>(
   ({ theme }) => css`
     padding: 7px;
     padding-top: 10px;
+
     font-size: 1.2rem;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
   `
 );
