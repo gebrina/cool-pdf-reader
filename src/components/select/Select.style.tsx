@@ -13,12 +13,12 @@ export const SelectWrapper = styled.div<ITheme>(
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    font-weight: 500;
     gap: 0;
+    font-weight: 500;
     > div {
       opacity: 1;
       transition: all 0.5s ease-in;
-      /* transform: rotate(180deg) translateX(-100%); */
+      transform: rotate(180deg) translateX(-100%);
     }
     &:hover {
       > div {
@@ -61,15 +61,15 @@ export const Option = styled.div<ITheme & { selected: boolean }>(
   `
 );
 
-export const SelectLabel = styled.label<ITheme>(
-  ({ theme }) => css`
-    padding: 7px;
-    padding-top: 10px;
-
-    font-size: 1.2rem;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
-    }
-  `
-);
+export const SelectLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 7px;
+  padding-top: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
+`;

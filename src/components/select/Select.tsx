@@ -24,6 +24,10 @@ export const Select: FC<TSelectProps> = ({
 }) => {
   const trackUpDownKeys = useRef(-1);
 
+  const selectedOptionsIcon = selectOptions.find(
+    (option) => option.value === theme
+  )!;
+
   const handleSelect = (optionId: number) => {
     const selectedOption = selectOptions.find((x) => x.id === optionId)!;
     onSelect(selectedOption);
@@ -54,13 +58,16 @@ export const Select: FC<TSelectProps> = ({
 
   return (
     <SelectWrapper onKeyDown={handleKeyDown} tabIndex={1} theme={theme}>
-      <SelectLabel theme={theme}>{label}</SelectLabel>
+      <SelectLabel theme={theme}>
+        {selectedOptionsIcon?.icon}
+        {label}
+      </SelectLabel>
       {!!selectOptions.length &&
-        selectOptions.map(({ id, label, icon }) => (
+        selectOptions.map(({ id, label, icon, value }) => (
           <Option
             onKeyDown={handleKeyDown}
             onClick={() => handleSelect(id)}
-            selected={false}
+            selected={theme === value}
             key={label + id}
             theme={theme}
           >

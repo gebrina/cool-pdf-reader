@@ -19,7 +19,7 @@ export const PdfViewer = styled.div<TPdfViewrProps>(
       text-align: center;
     }
 
-    &::after {
+    :not(:has(.error-message))::after {
       content: "";
       position: fixed;
       pointer-events: none;
@@ -234,3 +234,23 @@ export const InputPageNumber = styled.input<{ charLength?: number }>(
     padding: 0.1rem 0;
   `
 );
+
+export const ErrorMessage = styled.h3`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-100%);
+  color: #fc0071;
+  > :not(span) {
+    transform: scaleX(1);
+  }
+  > span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    svg {
+      font-size: 3rem;
+    }
+    font-size: 2rem !important;
+    margin-bottom: 1rem;
+  }
+`;

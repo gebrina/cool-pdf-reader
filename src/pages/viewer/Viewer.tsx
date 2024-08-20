@@ -4,6 +4,7 @@ import {
   BiMenuAltLeft,
   BiMenuAltRight,
   BiMoon,
+  BiSad,
   BiSkipNext,
   BiSkipPrevious,
   BiSun,
@@ -16,8 +17,10 @@ import { ThemeName } from "../../common";
 import { Select, TSelectOptions } from "../../components/select/Select";
 import { usePdfContext } from "../../context";
 import { getBookInfo, getCanvasWidth, storeBookInfo } from "../../utils";
+import { Uploader } from "../uploader";
 import {
   Button,
+  ErrorMessage,
   InputPageNumber,
   PagingWrapper,
   PdfOutline,
@@ -220,14 +223,14 @@ export const Viewer = () => {
           </Button>
         </div>
         <Select
-          label="Select Theme"
+          label={`Select Theme`}
           theme={theme}
           selectOptions={themeOptions}
           onSelect={handleSelect}
         />
       </PdfViewerToolBar>
       <>
-        {pdfFile && (
+        {pdfFile ? (
           <Document
             onItemClick={({ pageNumber }) => setPageNumber(pageNumber)}
             onLoadSuccess={onDocumentLoadSuccess}
@@ -246,6 +249,13 @@ export const Viewer = () => {
               pageNumber={selectedPageNumber}
             />
           </Document>
+        ) : (
+          <ErrorMessage theme={theme} className="error-message">
+            <span>
+              <BiSad /> Pdf file load error...
+            </span>
+            <Uploader viewerPage={true} />
+          </ErrorMessage>
         )}
         <PagingWrapper theme={theme}>
           <Button onClick={handlePrevPage} theme={theme}>
