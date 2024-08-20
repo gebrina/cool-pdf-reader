@@ -16,13 +16,12 @@ export const SelectWrapper = styled.div<ITheme>(
     font-weight: 500;
     gap: 0;
     > div {
-      opacity: 0;
+      opacity: 1;
       transition: all 0.5s ease-in;
       transform: rotate(180deg) translateX(-100%);
     }
     &:hover {
       > div {
-        display: block;
         opacity: 1;
         transform: rotate(0) translateX(0);
       }
@@ -30,13 +29,18 @@ export const SelectWrapper = styled.div<ITheme>(
   `
 );
 
-export const Option = styled.div<ITheme>(
-  ({ theme }) => css`
+export const Option = styled.div<ITheme & { selected: boolean }>(
+  ({ theme, selected }) => css`
     display: flex;
     align-items: center;
     border-top: 1px solid ${selectColors(theme).titleColor};
     justify-content: flex-start;
-    background-color: ${selectColors(theme).bgColor};
+    background-color: ${selected
+      ? selectColors(theme).textColor
+      : selectColors(theme).bgColor};
+    color: ${selected
+      ? selectColors(theme).bgColor
+      : selectColors(theme).textColor};
     gap: 5px;
     padding: 5px 4px;
     height: 100%;

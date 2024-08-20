@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { ThemeName } from "../../common";
 import { Option, SelectLabel, SelectWrapper } from "./Select.style";
 
@@ -22,14 +22,22 @@ export const Select: FC<TSelectProps> = ({
   selectOptions,
   onSelect,
 }) => {
-  const [options, setOptions] = useState(selectOptions);
+  const handleSelect = (optionId: number) => {
+    const selectedOption = selectOptions.find((x) => x.id === optionId)!;
+    onSelect(selectedOption);
+  };
 
   return (
     <SelectWrapper theme={theme}>
       <SelectLabel theme={theme}>{label}</SelectLabel>
       {!!selectOptions.length &&
         selectOptions.map(({ id, label, value, icon }) => (
-          <Option key={label + id} theme={theme}>
+          <Option
+            onClick={() => handleSelect(id)}
+            selected={value === theme}
+            key={label + id}
+            theme={theme}
+          >
             {icon && icon} {label}
           </Option>
         ))}
