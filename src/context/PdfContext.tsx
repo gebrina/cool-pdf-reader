@@ -41,7 +41,7 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
     const file = event.target.files?.[0];
     if (file) {
       const { name } = file;
-      const fileName = name.substring(0, name.length - 4);
+      const fileName = name.replace(/ /g, "-").substring(0, name.length - 4);
       const base64File = await toBase64(file);
       await storeBookInfo({ file: base64File, name: fileName });
       const fileUrl = URL.createObjectURL(file);

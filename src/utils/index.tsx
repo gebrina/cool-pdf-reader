@@ -116,8 +116,13 @@ export const getBookInfo = async (): Promise<TBookInfo> => {
 
 export const getBookName = (): string => {
   const pathname = location.pathname;
-  const fileName = decodeURI(pathname.substring(1));
-  return fileName;
+  try {
+    const fileName = decodeURI(pathname.substring(1));
+    return fileName;
+  } catch (error) {
+    console.error("Uri Error", error);
+    return "";
+  }
 };
 
 export const toBase64 = (file: File): Promise<string> =>
