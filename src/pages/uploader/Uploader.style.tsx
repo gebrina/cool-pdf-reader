@@ -67,6 +67,7 @@ export const InputLabel = styled.label<ITheme>(
     &:hover {
       cursor: pointer;
       background-color: #a4b0ae;
+      color: ${theme === "dark" && "black"};
       transition: all 0.5s ease;
     }
     @media only screen and (max-width: 600px) {

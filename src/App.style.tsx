@@ -8,7 +8,11 @@ export const PdfContainer = styled.div<ITheme>(
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-blend-mode: luminosity;
+    background-blend-mode: ${theme === "dark"
+      ? "hard-light"
+      : theme === "default"
+      ? "luminosity"
+      : "hard-light"};
     background-color: ${selectColors(theme).bgColor};
     color: ${selectColors(theme).textColor};
     display: flex;
@@ -21,11 +25,11 @@ export const PdfContainer = styled.div<ITheme>(
     }
 
     &::before {
+      content: "";
       position: fixed;
       pointer-events: none;
       top: 0;
-      opacity: 0.5;
-      content: "";
+      opacity: 0.8;
       height: 100%;
       width: 100%;
       background-color: black;

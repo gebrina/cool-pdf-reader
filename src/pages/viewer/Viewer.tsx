@@ -11,12 +11,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { NavLink } from "react-router-dom";
 import { usePdfContext } from "../../context";
-import {
-  getBookInfo,
-  getCanvasWidth,
-  selectColors,
-  storeBookInfo,
-} from "../../utils";
+import { getBookInfo, getCanvasWidth, storeBookInfo } from "../../utils";
 import {
   Button,
   InputPageNumber,
@@ -62,9 +57,9 @@ export const Viewer = () => {
       if (timeOut) clearTimeout(timeOut);
       timeOut = setTimeout(() => udpateCanvasWidth(), 500);
     };
-
     window.addEventListener("resize", handleWindowResize);
-    // Reset book's page number if it was read before
+
+    // Reset file's page number if it was read before
     const updatePageNumber = async () => {
       const book = await getBookInfo();
       book && book.page && setPageNumber(book.page);
@@ -191,7 +186,7 @@ export const Viewer = () => {
   };
 
   return (
-    <PdfViewer className="pdf-viewer" theme={theme}>
+    <PdfViewer className="pdf-viewer" canvasWidth={canvasWidth} theme={theme}>
       <PdfViewerToolBar theme={theme}>
         <div
           className="switch-outline"
@@ -230,7 +225,6 @@ export const Viewer = () => {
               />
             )}
             <Page
-              canvasBackground={selectColors(theme).bgColor}
               width={canvasWidth}
               onLoadError={(e) => console.error(e)}
               pageNumber={selectedPageNumber}

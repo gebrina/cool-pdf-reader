@@ -6,10 +6,11 @@ import { selectColors } from "../../utils";
 
 type TStyleProps = {
   theme: ThemeName;
+  canvasWidth?: number;
 };
 
 export const PdfViewer = styled.div<TStyleProps>(
-  ({ theme }) => css`
+  ({ theme, canvasWidth }) => css`
     margin: 50px 0px;
     display: grid;
     justify-items: center;
@@ -26,12 +27,14 @@ export const PdfViewer = styled.div<TStyleProps>(
       content: "";
       position: fixed;
       pointer-events: none;
-      mix-blend-mode: multiply;
       top: 0;
-      left: 0;
-      width: 100%;
+      left: calc(calc(100% - ${canvasWidth}px) / 2);
+      width: ${canvasWidth}px;
       height: 100%;
-      background-color: ${selectColors(theme).bgColor};
+      background-color: ${theme !== "dark"
+        ? selectColors(theme).bgColor
+        : "white"};
+      mix-blend-mode: ${theme === "dark" ? "difference" : "multiply"};
       z-index: 1;
     }
 
@@ -89,8 +92,8 @@ export const Button = styled.button<TButtonProps>(
     align-items: center;
     cursor: pointer;
     svg {
-      font-size: ${zoom ? "" : "2.5rem"};
-      color: ${zoom ? "" : `${selectColors(theme).textColor}`};
+      font-size: ${zoom ? "" : "2rem"};
+      color: ${selectColors(theme).textColor};
     }
   `
 );
