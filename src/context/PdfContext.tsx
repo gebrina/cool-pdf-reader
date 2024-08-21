@@ -32,7 +32,7 @@ export const PdfContextProvider: FC<{ children: ReactNode }> = ({
 }) => {
   const navigate = useNavigate();
 
-  const [themeName, setThemeName] = useState<ThemeName>("dark");
+  const [themeName, setThemeName] = useState<ThemeName>("default");
   const [pdfFile, setPdfFile] = useState("");
 
   const handleInputFileChange = async (
