@@ -254,3 +254,12 @@ export const ErrorMessage = styled.h3`
     margin-bottom: 1rem;
   }
 `;
+
+export const SelectWrapper = styled.div`
+  position: relative;
+  > div > svg {
+    position: absolute;
+    top: 0.2rem;
+    left: -150px;
+  }
+`;

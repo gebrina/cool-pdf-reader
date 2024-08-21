@@ -6,8 +6,8 @@ import { selectColors } from "../../utils";
 export const SelectWrapper = styled.div<ITheme>(
   ({ theme }) => css`
     position: absolute;
-    top: 1vh;
     right: 0;
+    top: -1vh;
     text-align: left;
     min-width: 150px;
     border-radius: 10px;

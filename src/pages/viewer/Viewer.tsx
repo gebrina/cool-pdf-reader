@@ -9,7 +9,7 @@ import {
   BiSkipPrevious,
   BiSun,
 } from "react-icons/bi";
-import { FiMinus, FiPlus } from "react-icons/fi";
+import { FiAlignCenter, FiAlignJustify, FiMinus, FiPlus } from "react-icons/fi";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -26,6 +26,7 @@ import {
   PdfOutline,
   PdfViewer,
   PdfViewerToolBar,
+  SelectWrapper,
 } from "./Viewer.style";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -43,6 +44,7 @@ export const Viewer = () => {
   const [canvasWidth, setCanvasWidth] = useState(0);
   const [showOutline, setShowOutline] = useState(false);
   const [exitAnimate, setExitAnimate] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   const themeOptions: TSelectOptions[] = [
     { id: 1, label: "Default", value: "default", icon: <BiBulb /> },
@@ -197,6 +199,9 @@ export const Viewer = () => {
       setPageNumber(0);
     }
   };
+  const toggleShowAllPages = () => {
+    setShowAll(!showAll);
+  };
 
   const handleSelect = (theme: TSelectOptions) =>
     onChangeTheme(theme.value as ThemeName);
@@ -222,12 +227,17 @@ export const Viewer = () => {
             <FiPlus aria-label="Zoom In" />
           </Button>
         </div>
-        <Select
-          label={`Select Theme`}
-          theme={theme}
-          selectOptions={themeOptions}
-          onSelect={handleSelect}
-        />
+        <SelectWrapper>
+          <div onClick={toggleShowAllPages}>
+            {showAll ? <FiAlignCenter /> : <FiAlignJustify />}
+          </div>
+          <Select
+            label={`Select Theme`}
+            theme={theme}
+            selectOptions={themeOptions}
+            onSelect={handleSelect}
+          />
+        </SelectWrapper>
       </PdfViewerToolBar>
       <>
         {pdfFile ? (
@@ -243,11 +253,46 @@ export const Viewer = () => {
                 theme={theme}
               />
             )}
-            <Page
-              width={canvasWidth}
-              onLoadError={(e) => console.error(e)}
-              pageNumber={selectedPageNumber}
-            />
+            {showAll ? (
+              Array.from({ length: numPages }).map((_, index) => (
+                <Page
+                  width={canvasWidth}
+                  onLoadError={(e) => console.error(e)}
+                  pageNumber={index + 1}
+                />
+              ))
+            ) : (
+              <>
+                {" "}
+                <Page
+                  width={canvasWidth}
+                  onLoadError={(e) => console.error(e)}
+                  pageNumber={selectedPageNumber}
+                />
+                <PagingWrapper theme={theme}>
+                  <Button onClick={handlePrevPage} theme={theme}>
+                    <BiSkipPrevious />
+                  </Button>
+                  <>
+                    <InputPageNumber
+                      charLength={pageNumber.toString().length}
+                      onChange={handlePageNumberChange}
+                      type="text"
+                      value={pageNumber == 0 ? "" : pageNumber}
+                    />
+                    /
+                    <InputPageNumber
+                      charLength={numPages.toString().length}
+                      readOnly
+                      value={numPages}
+                    />
+                  </>
+                  <Button onClick={handleNextPage} theme={theme}>
+                    <BiSkipNext />
+                  </Button>
+                </PagingWrapper>
+              </>
+            )}
           </Document>
         ) : (
           <ErrorMessage theme={theme} className="error-message">
@@ -257,28 +302,6 @@ export const Viewer = () => {
             <Uploader viewerPage={true} />
           </ErrorMessage>
         )}
-        <PagingWrapper theme={theme}>
-          <Button onClick={handlePrevPage} theme={theme}>
-            <BiSkipPrevious />
-          </Button>
-          <>
-            <InputPageNumber
-              charLength={pageNumber.toString().length}
-              onChange={handlePageNumberChange}
-              type="text"
-              value={pageNumber == 0 ? "" : pageNumber}
-            />
-            /
-            <InputPageNumber
-              charLength={numPages.toString().length}
-              readOnly
-              value={numPages}
-            />
-          </>
-          <Button onClick={handleNextPage} theme={theme}>
-            <BiSkipNext />
-          </Button>
-        </PagingWrapper>
       </>
     </PdfViewer>
   );
