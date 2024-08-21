@@ -3,31 +3,29 @@ import styled from "@emotion/styled";
 import { ITheme } from "../../common";
 import { selectColors } from "../../utils";
 
-export const SelectWrapper = styled.div<ITheme>(
-  ({ theme }) => css`
-    position: absolute;
-    right: 0;
-    top: -1vh;
-    text-align: left;
-    min-width: 150px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    font-weight: 500;
+export const SelectWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  top: -1vh;
+  text-align: left;
+  min-width: 150px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-weight: 500;
+  > div {
+    opacity: 1;
+    transition: all 0.5s ease-in;
+    transform: rotate(180deg) translateX(-100%);
+  }
+  &:hover {
     > div {
       opacity: 1;
-      transition: all 0.5s ease-in;
-      transform: rotate(180deg) translateX(-100%);
+      transform: rotate(0) translateX(0);
     }
-    &:hover {
-      > div {
-        opacity: 1;
-        transform: rotate(0) translateX(0);
-      }
-    }
-  `
-);
+  }
+`;
 
 export const Option = styled.div<ITheme & { selected: boolean }>(
   ({ theme, selected }) => css`

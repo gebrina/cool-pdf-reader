@@ -57,7 +57,7 @@ export const Select: FC<TSelectProps> = ({
   };
 
   return (
-    <SelectWrapper onKeyDown={handleKeyDown} tabIndex={1} theme={theme}>
+    <SelectWrapper onKeyDown={handleKeyDown} tabIndex={1}>
       <SelectLabel theme={theme}>
         {selectedOptionsIcon?.icon}
         {label}
